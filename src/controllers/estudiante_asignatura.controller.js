@@ -15,12 +15,14 @@ export async function getEntitys(req,res) {
 }
  
 export async function getOneEntity(req,res){
-    const {id_asignatura}=req.params;
+    const {id}=req.params;
+    const id_asignatura=id;
+    console.log(id_asignatura,req.params,id);
     try{
         const filas = await Entity.findOne({
             where:{id_asignatura}
         });
-        res.json(project);
+        res.json(filas);
     }catch(err){
         res.status(500).json({message:'Something goes wrong: '+err,
         data:{}});
@@ -28,20 +30,22 @@ export async function getOneEntity(req,res){
 }
 
 export async function updateEntity(req,res){
-    const {id_asignatura}=req.params;
+    const {id}=req.params;
+    const id_asignatura=id;
     campos = req.body;
     const filas = await Entity.findAll({
-        attributes:camposText,
+        //attributes:camposText,
+        attributes:req.params,
         where:{id_asignatura}
     });
     try{
         if(filas.length>0){
-            proyects.forEach(async row=>{
+            filas.forEach(async row=>{
                 await row.update(campos);
             });
         }
         res.json({
-            message:'Update sucess',data:proyects
+            message:'Update sucess',data:filas
         });
     }catch(err){
         res.status(500).json({message:'Something goes wrong: '+err});
@@ -49,7 +53,8 @@ export async function updateEntity(req,res){
 }
 
 export async function deleteEntity(req,res){
-    const {id_asignatura}=req.params;
+    const {id}=req.params;
+    const id_asignatura=id;
     try{
         const deletedRowCount = await Entity.destroy({
             where:{id_asignatura}

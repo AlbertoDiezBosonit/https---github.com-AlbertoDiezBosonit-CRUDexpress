@@ -15,7 +15,7 @@ const Estudiante_asignatura = sequelize.define('estudiante_asignatura',{
     coments: {
         type: Sequelize.TEXT
     },
-    finish_date:  {
+    initial_date:  {
         type: Sequelize.DATE
     },
     finish_date:  {
@@ -34,8 +34,10 @@ const Estudiante_asignatura = sequelize.define('estudiante_asignatura',{
 })
 
 Estudiante.hasMany(Estudiante_asignatura,{
-    foreignKey:'id_estudiante'
+    foreignKey:'id_estudiante',sourceKey:'id'
 });
-Estudiante_asignatura.belongsTo(Estudiante);
+Estudiante_asignatura.belongsTo(Estudiante,{
+    foreignKey:'id_estudiante',sourceKey:'id'
+});
 
 export default Estudiante_asignatura;
