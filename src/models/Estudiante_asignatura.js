@@ -23,10 +23,10 @@ const Estudiante_asignatura = sequelize.define('estudiante_asignatura',{
     },
     id_estudiante: {
         type: Sequelize.UUIDV4,
-        references: {
+        /*references: {
             model: Estudiante, //'estudiante',
             key: 'id',
-        },
+        },*/
     },
     
 },{
