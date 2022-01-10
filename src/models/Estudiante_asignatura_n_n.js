@@ -15,12 +15,26 @@ const Estudiante_asignatura_n_n = sequelize.define('estudiante_asignatura_n_n',{
     
 },{
     timestamps:false
-})
+}) 
+
+Estudiante_asignatura_n_n.removeAttribute('id');
  
 
 // habra que probar si basta con esto
-Estudiante.belongsToMany(Asignatura,{through:Estudiante_asignatura_n_n,foreignKey:'id_estudiante',sourceKey:'id'});
-Asignatura.belongsToMany(Estudiante,{through:Estudiante_asignatura_n_n,foreignKey:'id_asignatura',sourceKey:'id'});
+Estudiante.belongsToMany(Asignatura,{through:Estudiante_asignatura_n_n,foreignKey:'id_estudiante',sourceKey:'id',onUpdate:'CASCADE'});
+Asignatura.belongsToMany(Estudiante,{through:Estudiante_asignatura_n_n,foreignKey:'id_asignatura',sourceKey:'id',onUpdate:'CASCADE'});
 
 
 export default Estudiante_asignatura_n_n;
+
+/*
+CREATE TABLE IF NOT EXISTS public.estudiante_asignatura_n_n
+(
+    id_asignatura character varying(255) COLLATE pg_catalog."default",
+    id_estudiante character varying(255) COLLATE pg_catalog."default",
+	primary key(id_asignatura,id_estudiante),
+	foreign key (id_asignatura) references asignatura(id),
+	foreign key (id_estudiante) references estudiante(id)
+)
+
+*/ 
