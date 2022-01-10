@@ -1,9 +1,9 @@
-import Entity from "../models/Profesor";
+import Entity from "../models/Asignatura";
 
 
-var campos={brank:'',comments:'',id_persona:''};
-var camposText=['brank','coments','id_persona'];
-  
+///var campos={asignatura:'',coments:'',finish_date:'',initial_date:''};
+
+
 export async function getEntitys(req,res) {
     try{
         const rows = await Entity.findAll();
@@ -29,10 +29,10 @@ export async function getOneEntity(req,res){
 
 export async function updateEntity(req,res){
     const {id}=req.params;
-    campos = req.body;
+    let campos = req.body;
     const filas = await Entity.findAll({
         //attributes:camposText,
-        attributes:req.body,
+        attributes:req.params,
         where:{id}
     });
     try{
@@ -40,7 +40,7 @@ export async function updateEntity(req,res){
             filas.forEach(async row=>{
                 await row.update(campos);
             });
-        }  
+        }
         res.json({
             message:'Update sucess',data:filas
         });
@@ -63,10 +63,10 @@ export async function deleteEntity(req,res){
 }
 
 export async function createEntity(req,res){
-    campos = req.body;
+    let campos = req.body;
     try{
         let newRow = await Entity.create(campos,{
-            fields:campos['id']
+            fields:campos['id_asignatura']
         })
         if(newRow){
             res.json({

@@ -2,7 +2,7 @@ import { Sequelize} from "sequelize";
 import { sequelize } from "../database/database"; // importamos la cadena de conexion
 import Persona from "./Persona";
 import Profesor from "./Profesor";
-
+    
 const Estudiante = sequelize.define('estudiante',{
     id: {
         type: Sequelize.UUIDV4,

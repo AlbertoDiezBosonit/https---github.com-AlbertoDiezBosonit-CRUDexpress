@@ -1,6 +1,6 @@
 import { Sequelize} from "sequelize";
 import { sequelize } from "../database/database"; // importamos la cadena de conexion
-import Estudiante from "./Estudiante";
+import Estudiante from "./Estudiante"; 
 
 const Estudiante_asignatura = sequelize.define('estudiante_asignatura',{
     id_asignatura:{
@@ -21,7 +21,7 @@ const Estudiante_asignatura = sequelize.define('estudiante_asignatura',{
     finish_date:  {
         type: Sequelize.DATE
     },
-    id_estudiante: {
+    id_estudiante: { 
         type: Sequelize.UUIDV4,
         /*references: {
             model: Estudiante, //'estudiante',

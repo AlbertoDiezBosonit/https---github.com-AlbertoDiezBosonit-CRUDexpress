@@ -1,9 +1,9 @@
-import Entity from "../models/Profesor";
+import Entity from "../models/Estudiante_asignatura_n_n";
 
 
-var campos={brank:'',comments:'',id_persona:''};
-var camposText=['brank','coments','id_persona'];
-  
+///var campos={asignatura:'',coments:'',finish_date:'',initial_date:''};
+
+
 export async function getEntitys(req,res) {
     try{
         const rows = await Entity.findAll();
@@ -16,9 +16,10 @@ export async function getEntitys(req,res) {
  
 export async function getOneEntity(req,res){
     const {id}=req.params;
+    const id_asignatura=id;
     try{
         const filas = await Entity.findOne({
-            where:{id}
+            where:{id_asignatura}
         });
         res.json(filas);
     }catch(err){
@@ -29,18 +30,19 @@ export async function getOneEntity(req,res){
 
 export async function updateEntity(req,res){
     const {id}=req.params;
-    campos = req.body;
+    const id_asignatura=id;
+    let campos = req.body;
     const filas = await Entity.findAll({
         //attributes:camposText,
-        attributes:req.body,
-        where:{id}
+        attributes:req.params,
+        where:{id_asignatura}
     });
     try{
         if(filas.length>0){
             filas.forEach(async row=>{
                 await row.update(campos);
             });
-        }  
+        }
         res.json({
             message:'Update sucess',data:filas
         });
@@ -51,9 +53,10 @@ export async function updateEntity(req,res){
 
 export async function deleteEntity(req,res){
     const {id}=req.params;
+    const id_asignatura=id;
     try{
         const deletedRowCount = await Entity.destroy({
-            where:{id}
+            where:{id_asignatura}
         });
         res.json({message:'Deleted sucessfully',deletedRowCount:deletedRowCount});
     }catch(err){
@@ -63,10 +66,10 @@ export async function deleteEntity(req,res){
 }
 
 export async function createEntity(req,res){
-    campos = req.body;
+    let campos = req.body;
     try{
         let newRow = await Entity.create(campos,{
-            fields:campos['id']
+            fields:campos['id_asignatura']
         })
         if(newRow){
             res.json({
